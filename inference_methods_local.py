@@ -9,7 +9,7 @@ class InferenceException(Exception):
 
 def inference_ad3_local(unary_potentials, pairwise_potentials, edges, relaxed=False,
                         verbose=0, return_energy=False, branch_and_bound=False,
-                        inference_exception=None, yassine=False):
+                        inference_exception=None, return_marginals=False):
 
     b_multi_type = isinstance(unary_potentials, list)
     if b_multi_type:
@@ -29,13 +29,9 @@ def inference_ad3_local(unary_potentials, pairwise_potentials, edges, relaxed=Fa
     if solver_status in ["fractional", "unsolved"] and relaxed:
         if b_multi_type:
             y = (unary_marginals, pairwise_marginals)
-            if yassine and verbose:
-                print("I'm here 1")
         else:
             unary_marginals = unary_marginals.reshape(unary_potentials.shape)
             y = (unary_marginals, pairwise_marginals)
-            if yassine and verbose:
-                print("I'm here 2")
     else:
         if b_multi_type:
             if inference_exception and solver_status in ["fractional", "unsolved"]:
@@ -46,17 +42,10 @@ def inference_ad3_local(unary_potentials, pairwise_potentials, edges, relaxed=Fa
                 ly.append(_cum_n_states + np.argmax(unary_marg, axis=-1))
                 _cum_n_states += unary_marg.shape[1]
             y = np.hstack(ly)
-            if yassine and verbose:
-                print("I'm here 3")
         else:
             y = np.argmax(unary_marginals, axis=-1)
-            if yassine and verbose:
-                print("I'm here 4")
-
     if return_energy:
         return y, -energy
-    if yassine and verbose:
-        print("I'm here 5")
-    if yassine:
+    if return_marginals:
         return y, unary_marginals
     return y
