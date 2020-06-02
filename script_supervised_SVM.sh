@@ -40,4 +40,4 @@ echo sampling_scheme $sampling_scheme
 echo line_search $line_search
 echo init_previous_step_size $init_previous_step_size
 echo use_warm_start $use_warm_start
-python3.6 supervised_OCR.py --numberEpochsFW $numberEpochsFW --numberEpochsCKN $numberEpochsCKN --regParBCFW $regParBCFW --gpu $gpu --scaler $2 --lr $lr --npass $3 --size-patch $size_patch --zero-prob $4 --non-uniformity $non_uniformity --sampling-scheme $sampling_scheme --line-search $line_search --init-previous-step-size $init_previous_step_size --use-warm-start $use_warm_start --predictor $predictor --numberEpochsUnsupCKN $numberEpochsUnsupCKN --benchmark $benchmark --regParSDCA $1
+python3.6 main.py --numberEpochsFW $numberEpochsFW --numberEpochsCKN $numberEpochsCKN --regParBCFW $regParBCFW --gpu $gpu --scaler $2 --lr $lr --npass $3 --size-patch $size_patch --zero-prob $4 --non-uniformity $non_uniformity --sampling-scheme $sampling_scheme --line-search $line_search --init-previous-step-size $init_previous_step_size --use-warm-start $use_warm_start --predictor $predictor --numberEpochsUnsupCKN $numberEpochsUnsupCKN --benchmark $benchmark --regParSDCA $1
