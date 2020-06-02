@@ -1,4 +1,4 @@
-# Our Paper Title
+# Structured Convolutional Kernel Networks for Airline Crew Scheduling
 
 This repository is the official implementation of Structured Convolutional Kernel Networks for Airline Crew Scheduling.
 
