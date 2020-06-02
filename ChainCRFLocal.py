@@ -35,7 +35,7 @@ class ChainCRFLocal(ChainCRF):
                 marginals = self.turn_dense_to_one_matrix(y, num_classes)
             elif self.inference_method == "ad3":
                 y, marginals = inference_ad3_local(self._get_unary_potentials(x, w), self._get_pairwise_potentials(
-                    x, w), self._get_edges(x), relaxed=True, branch_and_bound=False, yassine=True)
+                    x, w), self._get_edges(x), relaxed=True, branch_and_bound=False, return_marginals=True)
             else:
                 print("Unknown inference method !")
             ys.append(y)
@@ -47,4 +47,4 @@ class ChainCRFLocal(ChainCRF):
         unary_potentials = self._get_unary_potentials(x, w)
         edges = self._get_edges(x)
         return inference_ad3_local(unary_potentials, pairwise_potentiels, edges, relaxed=True, branch_and_bound=False,
-                                   yassine=True)
+                                   return_marginals=True)
