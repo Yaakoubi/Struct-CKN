@@ -40,5 +40,4 @@ echo line_search $line_search
 echo init_previous_step_size $init_previous_step_size
 echo use_warm_start $use_warm_start
 echo regParSDCA $regParSDCA
-cd /network/home/yaakouby/SCKN_August_2019/Merged_Code/
 python3.6 supervised_OCR.py --numberEpochsFW $numberEpochsFW --numberEpochsCKN $numberEpochsCKN --regParBCFW $regParBCFW --gpu $gpu --scaler $scaler --lr $lr --npass $npass --size-patch $size_patch --zero-prob $zero_prob --non-uniformity $non_uniformity --sampling-scheme $sampling_scheme --line-search $line_search --init-previous-step-size $init_previous_step_size --use-warm-start $use_warm_start --predictor $predictor --numberEpochsUnsupCKN $numberEpochsUnsupCKN --benchmark $benchmark --regParSDCA $regParSDCA
