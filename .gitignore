@@ -1,0 +1,6 @@
+# ignore all compiled bytecode files
+*.pyc
+
+
+# ignore all "network file system" files
+.nfs*

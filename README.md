@@ -12,16 +12,22 @@ pip install --upgrade -r requirements.txt
 
 
 Use python2 or python<=3.6.10 to intall pystruct.
-If you use python3.7, see [this link](https://stackoverflow.com/questions/24764549/upgrade-python-packages-from-requirements-txt-using-pip-command) for directions on how to install pystruct:
+If you use python3.7, see [this link](https://github.com/pystruct/pystruct/issues/225) for directions on how to install pystruct.
 
 
 ## Training
 
 
-To train the model(s) in the paper, run this command:
+To train the model(s) in the paper using default arguments, run this command:
 
 ```train
 python main.py
+```
+
+To use SDCA predictor, run this command:
+
+```train
+python main.py --predictor sdca
 ```
 
 To use the block-coordinate Frank-Wolfe predictor, run this command:
@@ -52,7 +58,7 @@ The pretrained model is in the the folder pretrained.
 
 Our model achieves the following performance on :
 
-### [OCR dataset]
+### [OCR dataset](http://ai.stanford.edu/~btaskar/ocr/)
 
 | Model name         | Test error    |
 | ------------------ |-------------- |
