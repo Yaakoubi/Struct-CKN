@@ -26,7 +26,8 @@ class Sampler:
                 self.score_tree.append(upper_level)
             else:
                 upper_level = np.empty(n // 2 + 1)
-                upper_level[:-1] = self.func(score_level[:-1:2], score_level[1::2])
+                upper_level[:-
+                            1] = self.func(score_level[:-1:2], score_level[1::2])
                 upper_level[-1] = score_level[-1]
                 self.score_tree.append(upper_level)
             score_level = self.score_tree[-1]
@@ -36,12 +37,14 @@ class Sampler:
         lower_level = self.score_tree[0]
         lower_level[index] = new_score
         for level in self.score_tree[1:]:
-            if index + 1 == lower_level.shape[0] and (index + 1) % 2 != 0:  # end of line, transfer
+            # end of line, transfer
+            if index + 1 == lower_level.shape[0] and (index + 1) % 2 != 0:
                 level[-1] = lower_level[index]
                 index //= 2
             else:
                 index //= 2
-                level[index] = self.func(lower_level[2 * index], lower_level[2 * index + 1])
+                level[index] = self.func(
+                    lower_level[2 * index], lower_level[2 * index + 1])
             lower_level = level
 
     def sample(self):

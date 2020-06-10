@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from scipy.io import loadmat
 
 from .labeled_data import LabeledSequenceData, SparseLabeledSequenceData
@@ -9,7 +8,7 @@ def read_mat(path):
     return data['X'], data['y']
 
 
-def get_datasets(args,xtrain=None, ytrain=None,xtest=None, ytest=None):
+def get_datasets(args, xtrain=None, ytrain=None, xtest=None, ytest=None):
     if (xtrain is None) or (ytrain is None) or (xtest is None) or (ytest is None):
         xtrain, ytrain = read_mat(args.data_train_path)
         xtest, ytest = read_mat(args.data_test_path)
@@ -27,55 +26,37 @@ def get_datasets(args,xtrain=None, ytrain=None,xtest=None, ytest=None):
 
     return trainset, testset
 
-def get_dataset(args,train=False,test=False,xtrain=None, ytrain=None,xtest=None, ytest=None):
+
+def get_dataset(args, train=False, test=False, xtrain=None, ytrain=None, xtest=None, ytest=None):
     if train and (xtrain is None or ytrain is None):
         xtrain, ytrain = read_mat(args.data_train_path)
     if test and (xtest is None or ytest is None):
         xtest, ytest = read_mat(args.data_test_path)
 
     if args.is_dense:
-        if train: trainset = LabeledSequenceData(xtrain, ytrain, args.train_size)
-        if test: testset = LabeledSequenceData(xtest, ytest, args.test_size)
+        if train:
+            trainset = LabeledSequenceData(xtrain, ytrain, args.train_size)
+        if test:
+            testset = LabeledSequenceData(xtest, ytest, args.test_size)
     else:
-        if train: trainset = SparseLabeledSequenceData(xtrain, ytrain, args.train_size)
-        if test: testset = SparseLabeledSequenceData(xtest, ytest, args.test_size,
-                                            trainset.vocabulary_sizes)
+        if train:
+            trainset = SparseLabeledSequenceData(
+                xtrain, ytrain, args.train_size)
+        if test:
+            testset = SparseLabeledSequenceData(xtest, ytest, args.test_size,
+                                                trainset.vocabulary_sizes)
 
-    if train: args.train_size = len(trainset)
-    if test: args.test_size = len(testset)
     if train:
-        if test: return trainset, testset
-        else: return trainset
+        args.train_size = len(trainset)
+    if test:
+        args.test_size = len(testset)
+    if train:
+        if test:
+            return trainset, testset
+        else:
+            return trainset
     else:
-        if test: return testset
-        else: return
-||||||| merged common ancestors
-=======
-from scipy.io import loadmat
-
-from .labeled_data import LabeledSequenceData, SparseLabeledSequenceData
-
-
-def read_mat(path):
-    data = loadmat(path, squeeze_me=True)
-    return data['X'], data['y']
-
-
-def get_datasets(args,xtrain=None, ytrain=None,xtest=None, ytest=None):
-    if (xtrain is None) or (ytrain is None) or (xtest is None) or (ytest is None):
-        xtrain, ytrain = read_mat(args.data_train_path)
-        xtest, ytest = read_mat(args.data_test_path)
-
-    if args.is_dense:
-        trainset = LabeledSequenceData(xtrain, ytrain, args.train_size)
-        testset = LabeledSequenceData(xtest, ytest, args.test_size)
-    else:
-        trainset = SparseLabeledSequenceData(xtrain, ytrain, args.train_size)
-        testset = SparseLabeledSequenceData(xtest, ytest, args.test_size,
-                                            trainset.vocabulary_sizes)
-
-    args.train_size = len(trainset)
-    args.test_size = len(testset)
-
-    return trainset, testset
->>>>>>> 824794b94a0c0d5dbc17a904ff250da5dfdac052
+        if test:
+            return testset
+        else:
+            return

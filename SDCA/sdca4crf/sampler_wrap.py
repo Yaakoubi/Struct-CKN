@@ -40,7 +40,8 @@ class SamplerWrap:
                            SamplerWrap.MAX, SamplerWrap.SAFEMAX]:
             self.importances = np.ones(self.size)
         elif self.scheme in [SamplerWrap.IMPORTANCE, SamplerWrap.GAPP]:
-            self.importances = 1 + radii(trainset) ** 2 / self.size / regularization
+            self.importances = 1 + \
+                radii(trainset) ** 2 / self.size / regularization
 
         if self.scheme == SamplerWrap.SAFEMAX:
             self.sampler = SafeMaxSampler(gaps_array, trainset, regularization)
@@ -50,9 +51,11 @@ class SamplerWrap:
 
     def update(self, sample_id, individual_gap, primal_direction_norm, step_size):
         if self.scheme in [SamplerWrap.GAP, SamplerWrap.GAPP]:
-            self.sampler.update(individual_gap * self.importances[sample_id], sample_id)
+            self.sampler.update(
+                individual_gap * self.importances[sample_id], sample_id)
         elif self.scheme == SamplerWrap.SAFEMAX:
-            self.sampler.update(sample_id, individual_gap, primal_direction_norm, step_size)
+            self.sampler.update(sample_id, individual_gap,
+                                primal_direction_norm, step_size)
 
     def full_update(self, gaps_array):
         if self.scheme in [SamplerWrap.GAP, SamplerWrap.GAPP]:

@@ -49,13 +49,16 @@ def sequence_sum_product(uscores, bscores):
     bmargs = np.empty([length - 1, nb_class, nb_class])
 
     if length == 2:
-        bmargs[0] = uscores[0, :, np.newaxis] + bscores[0] + uscores[1] - log_partition
+        bmargs[0] = uscores[0, :, np.newaxis] + \
+            bscores[0] + uscores[1] - log_partition
     else:
-        bmargs[0] = uscores[0, :, np.newaxis] + bscores[0] + uscores[1] + bm[1] - log_partition
-        bmargs[-1] = fm[-2, :, np.newaxis] + uscores[-2, :, np.newaxis] + bscores[-1] + uscores[-1]
+        bmargs[0] = uscores[0, :, np.newaxis] + \
+            bscores[0] + uscores[1] + bm[1] - log_partition
+        bmargs[-1] = fm[-2, :, np.newaxis] + \
+            uscores[-2, :, np.newaxis] + bscores[-1] + uscores[-1]
         for t in range(1, length - 2):
             bmargs[t] = fm[t - 1, :, np.newaxis] + uscores[t, :, np.newaxis] + bscores[t] + \
-                        uscores[t + 1] + bm[t + 1]
+                uscores[t + 1] + bm[t + 1]
 
     return umargs, bmargs, log_partition
 

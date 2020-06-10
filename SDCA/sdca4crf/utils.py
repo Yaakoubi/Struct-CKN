@@ -69,20 +69,20 @@ def letters2wordimage(letters_images):
     return word_image
 
 
-def infer_probas(dataset,weights,include_eos=True):
-    predicted_labels = np.zeros(dataset.nb_points,dtype=np.int8)
+def infer_probas(dataset, weights, include_eos=True):
+    predicted_labels = np.zeros(dataset.nb_points, dtype=np.int8)
     indices_to_remove = []
     for i in range(0, len(dataset)):
         points_sequence_i = dataset.get_points_sequence(i)
-        predicted_i = np.array(weights.predict(points_sequence_i),dtype=np.int8)
-        np.put(predicted_labels,range(dataset.starts[i],dataset.ends[i]),predicted_i)
+        predicted_i = np.array(weights.predict(
+            points_sequence_i), dtype=np.int8)
+        np.put(predicted_labels, range(
+            dataset.starts[i], dataset.ends[i]), predicted_i)
         indices_to_remove.append(dataset.ends[i])
-    if include_eos :
+    if include_eos:
         return predicted_labels
     predicted_labels = list(predicted_labels)
     for index in sorted(indices_to_remove, reverse=True):
         del predicted_labels[index]
     predicted_labels = np.array(predicted_labels).reshape(-1)
     return predicted_labels
-    
-    

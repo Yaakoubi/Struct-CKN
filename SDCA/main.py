@@ -26,14 +26,16 @@ if __name__ == '__main__':
     init_logdir(args, infostring)
 
     # run optimization
-    optweights, optmargs = sdca(trainset=train_data, testset=test_data, args=args)
+    optweights, optmargs = sdca(
+        trainset=train_data, testset=test_data, args=args)
 
     print("Optimization finished.")
     if args.save == 'all':
         #np.save(args.logdir + '/optweights.npy', optweights.to_array())
-        np.save(args.logdir + '/opttransition.npy',optweights.transition )
-        np.save(args.logdir + '/optbias.npy',optweights.bias )
-        np.save(args.logdir + '/optemission.npy',optweights.emission )
-        marginals_dic = {'marginal' + str(i): margs.binary for i, margs in enumerate(optmargs)}
+        np.save(args.logdir + '/opttransition.npy', optweights.transition)
+        np.save(args.logdir + '/optbias.npy', optweights.bias)
+        np.save(args.logdir + '/optemission.npy', optweights.emission)
+        marginals_dic = {
+            'marginal' + str(i): margs.binary for i, margs in enumerate(optmargs)}
         np.savez_compressed(args.logdir + '/optmarginals.npy', **marginals_dic)
-        #optweights.
+        # optweights.

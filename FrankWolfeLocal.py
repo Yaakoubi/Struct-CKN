@@ -34,7 +34,8 @@ class FrankWolfeSSVMLocal(BaseSSVM):
 
     def _calc_dual_gap(self, param_x, param_y):
         n_samples = len(param_x)
-        joint_feature_gt = self.model.batch_joint_feature(param_x, param_y, param_y)
+        joint_feature_gt = self.model.batch_joint_feature(
+            param_x, param_y, param_y)
         y_hat = self.model.batch_loss_augmented_inference(param_x, param_y, self.w,
                                                           relaxed=True)
         djoint_feature = joint_feature_gt - \
@@ -51,7 +52,8 @@ class FrankWolfeSSVMLocal(BaseSSVM):
     def _frank_wolfe_batch(self, param_x, param_y):
         param_l = 0.0
         n_samples = float(len(param_x))
-        joint_feature_gt = self.model.batch_joint_feature(param_x, param_y, param_y)
+        joint_feature_gt = self.model.batch_joint_feature(
+            param_x, param_y, param_y)
 
         for iteration in range(self.max_iter):
             y_hat = self.model.batch_loss_augmented_inference(param_x, param_y, self.w,
@@ -62,7 +64,8 @@ class FrankWolfeSSVMLocal(BaseSSVM):
             ws = djoint_feature * self.C
 
             w_diff = self.w - ws
-            dual_gap = 1.0 / (self.C * n_samples) * w_diff.T.dot(self.w) - param_l + ls
+            dual_gap = 1.0 / (self.C * n_samples) * \
+                w_diff.T.dot(self.w) - param_l + ls
 
             if self.line_search:
                 eps = 1e-15
@@ -72,7 +75,8 @@ class FrankWolfeSSVMLocal(BaseSSVM):
             else:
                 gamma = 2.0 / (iteration + 2.0)
 
-            dual_val = -0.5 * np.sum(self.w ** 2) + param_l * (n_samples * self.C)
+            dual_val = -0.5 * np.sum(self.w ** 2) + \
+                param_l * (n_samples * self.C)
             dual_gap_display = dual_gap * n_samples * self.C
             primal_val = dual_val + dual_gap_display
 
@@ -142,14 +146,16 @@ class FrankWolfeSSVMLocal(BaseSSVM):
                 if self.do_averaging:
                     self.rho = 2. / (self.k + 2.)
                     self.w = (1. - self.rho) * self.w + self.rho * w
-                    self.param_l = (1. - self.rho) * self.param_l + self.rho * self.l_loss
+                    self.param_l = (1. - self.rho) * \
+                        self.param_l + self.rho * self.l_loss
                 else:
                     self.w = w
                     self.param_l = self.l_loss
                 self.k += 1
 
             if (self.check_dual_every != 0) and (iteration % self.check_dual_every == 0):
-                dual_val, dual_gap, primal_val = self._calc_dual_gap(param_x, param_y)
+                dual_val, dual_gap, primal_val = self._calc_dual_gap(
+                    param_x, param_y)
                 self.primal_objective_curve_.append(primal_val)
                 self.objective_curve_.append(dual_val)
                 self.timestamps_.append(time() - self.timestamps_[0])

@@ -63,12 +63,13 @@ class LineSearch:
         return self.alpha_i.convex_combination(self.beta_i, step_size)
 
     def _function(self, newmarg, step_size):
-        quadratic = - self.train_size * self.regularization / 2 * self.norm_update(step_size)
+        quadratic = - self.train_size * self.regularization / \
+            2 * self.norm_update(step_size)
         return newmarg.entropy() + quadratic
 
     def norm_update(self, step_size):
         return step_size ** 2 * self.primaldir_squared_norm \
-               + 2 * step_size * self.weights_dot_primaldir
+            + 2 * step_size * self.weights_dot_primaldir
 
     def _derivative(self, newmarg, step_size):
         if step_size == 0:
@@ -77,9 +78,9 @@ class LineSearch:
             return 2 * self.quadratic_coeff
         else:
             return self.divergence_gap \
-                   + self.beta_i.kullback_leibler(newmarg) \
-                   - self.alpha_i.kullback_leibler(newmarg) \
-                   + 2 * step_size * self.quadratic_coeff
+                + self.beta_i.kullback_leibler(newmarg) \
+                - self.alpha_i.kullback_leibler(newmarg) \
+                + 2 * step_size * self.quadratic_coeff
 
     def _newton(self, newmarg, df):
         log_ddf = self.log_dual_direction_squared \
@@ -147,7 +148,8 @@ class LineSearch:
 
     def log_tensorboard(self, step):
         tl.log_value("optimal step size", self.optimal_step_size, step)
-        tl.log_value("number of line search steps", len(self.subobjectives), step)
+        tl.log_value("number of line search steps",
+                     len(self.subobjectives), step)
         tl.log_value("log10 primal_direction_squared_norm", np.log10(self.primaldir_squared_norm),
                      step=step)
 
@@ -166,7 +168,8 @@ def safe_newton(evaluator, lowerbound, upperbound, initial_point,
     """
 
     if (u_lower > 0 and u_upper > 0) or (u_lower < 0 and u_upper < 0):
-        raise ValueError("Root must be bracketed in [lower bound, upper bound]")
+        raise ValueError(
+            "Root must be bracketed in [lower bound, upper bound]")
     if u_lower == 0:
         return lowerbound
     if u_upper == 0:

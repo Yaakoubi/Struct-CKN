@@ -5,8 +5,10 @@ import numpy as np
 import tensorboard_logger as tl
 import math
 
+
 def are_consistent(monitor_dual, monitor_all):
-    if math.isnan(monitor_dual.get_value()) or math.isnan(monitor_all.dual_objective): return True
+    if math.isnan(monitor_dual.get_value()) or math.isnan(monitor_all.dual_objective):
+        return True
     return np.isclose(monitor_dual.get_value(), monitor_all.dual_objective)
 
 
@@ -117,7 +119,8 @@ class MonitorAllObjectives:
         return gaps_array
 
     def check_duality_gap(self):
-        if math.isnan(self.duality_gap) or math.isnan(self.dual_objective): return True
+        if math.isnan(self.duality_gap) or math.isnan(self.dual_objective):
+            return True
         """Check that the objective values are coherent with each other."""
         return np.isclose(self.duality_gap, self.primal_objective - self.dual_objective)
 
@@ -172,7 +175,8 @@ class MonitorDualObjective:
         self.entropy = self.entropies.mean()
         self.weights_squared_norm = weights.squared_norm()
 
-        self.dual_objective = self.entropy - self.regularization / 2 * self.weights_squared_norm
+        self.dual_objective = self.entropy - \
+            self.regularization / 2 * self.weights_squared_norm
 
     def update(self, i, newmarg_entropy, norm_update):
         self.weights_squared_norm += norm_update
@@ -180,7 +184,8 @@ class MonitorDualObjective:
         self.entropy += (newmarg_entropy - self.entropies[i]) / self.train_size
         self.entropies[i] = newmarg_entropy
 
-        self.dual_objective = self.entropy - self.regularization / 2 * self.weights_squared_norm
+        self.dual_objective = self.entropy - \
+            self.regularization / 2 * self.weights_squared_norm
 
     def get_value(self):
         return self.dual_objective
@@ -206,8 +211,10 @@ class MonitorDualityGapEstimate:
         return self.gap_estimate
 
     def log_tensorboard(self, true_duality_gap, step):
-        tl.log_value("log10 duality gap estimate", np.log10(self.gap_estimate), step)
-        tl.log_value("gap estimate/ true gap", self.gap_estimate / true_duality_gap, step)
+        tl.log_value("log10 duality gap estimate",
+                     np.log10(self.gap_estimate), step)
+        tl.log_value("gap estimate/ true gap",
+                     self.gap_estimate / true_duality_gap, step)
 
 
 class MonitorSparsity:
@@ -230,7 +237,8 @@ class MonitorSpeed:
 
     def update(self, step):
         current_time = time.time()
-        self.speed = (step - self.previous_step) / (current_time - self.previous_time)
+        self.speed = (step - self.previous_step) / \
+            (current_time - self.previous_time)
         self.previous_step = step
         self.previous_time = current_time
 

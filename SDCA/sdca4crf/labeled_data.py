@@ -29,7 +29,7 @@ class LabeledSequenceData:
         # trim to the desired number of sequences
         if size is not None:
             self.trim(size)
-        
+
         # evaluate the important sizes.
         self.nb_sequences = self.starts.shape[0]
         self.nb_points = self.labels.shape[0]
@@ -120,7 +120,8 @@ class SparseLabeledSequenceData(LabeledSequenceData):
 
         # convert to NaN non-existing attributes and attributes absent from the training set.
         points = points.astype(float)
-        points[np.logical_or(points == 0, points > self.vocabulary_sizes.by_attribute)] = np.nan
+        points[np.logical_or(points == 0, points >
+                             self.vocabulary_sizes.by_attribute)] = np.nan
 
         # shift dictionary value for each attribute
         points[:, 1:] += self.vocabulary_sizes.cumsum[:-1]
