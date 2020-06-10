@@ -462,9 +462,9 @@ class CKN(nn.Module):
 	 
 	def load_checkpoint(self):
 		if not os.path.exists('./pretrained/CKN.pth'):
-			raise Exception("""./pretrained/CKN.pth not found. \n
-            Please load the pretrained model from the following link: \n
-            https://anonymous.4open.science/r/142e698a-63c1-4e8b-a467-369e1389c5b6/""")
+			raise Exception("./pretrained/CKN.pth not found.\n"+
+            "Please load the pretrained model from the following link:\n" +
+            "https://bit.ly/Struct-CKN")
 		else:
 			checkpoint = torch.load('./pretrained/CKN.pth')
 			for k, v in checkpoint.items():
