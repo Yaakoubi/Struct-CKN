@@ -10,7 +10,7 @@ from CKN.CKN import *
 from ChainCRFLocal import ChainCRFLocal
 from FrankWolfeLocal import FrankWolfeSSVMLocal
 from utils_local import print_args
-
+from sklearn import preprocessing
 #matplotlib.use('Agg')
 
 parser = argparse.ArgumentParser()
@@ -21,7 +21,7 @@ parser.add_argument("--regParSDCA", metavar='regParSDCA', type=float, default=0.
 parser.add_argument("--lr", metavar='lr', type=float, default=.1)
 parser.add_argument("--gpu", metavar='gpu', type=int, default=0)
 parser.add_argument("--scaler", metavar='scaler', type=int, default=0)
-parser.add_argument("--npass", metavar='npass', type=int, default=50)
+parser.add_argument("--npass", metavar='npass', type=int, default=10)
 parser.add_argument('--sampling-scheme', type=str, default='gap', help='Type of sampling.',
                     choices=["uniform", "importance", "gap", "gap+", "max", "safemax"])
 parser.add_argument('--non-uniformity', type=float, default=0.8,
@@ -36,10 +36,11 @@ parser.add_argument('--line-search', type=str, choices=['golden', 'newton'], def
 parser.add_argument('--init-previous-step-size', type=int, default=0,
                     help='Use the previous step size taken for a given sample to initialize the line search?')
 parser.add_argument("--size-patch", metavar='size-patch', type=int, default=5)
-parser.add_argument("--zero-prob", metavar='zero-prob', type=float, default=0.0001)
+parser.add_argument("--zero-prob", metavar='zero-prob', type=float, default=0.0)
 parser.add_argument("--use-warm-start", metavar='use-warm-start', type=int, default=1)
 parser.add_argument("--predictor", type=str, default="sdca", choices=["sdca", "fw", "logistic", "linear"])
-parser.add_argument("--numberEpochsUnsupCKN", type=int, default=100)
+parser.add_argument("--numberEpochsUnsupCKN", metavar='numberEpochsUnsupCKN', type=int, default=100,
+                    help ="Number of Epochs for Unsupervised CKN")
 parser.add_argument("--benchmark", metavar='benchmark', type=int, default=0)
 args = parser.parse_args()
 print_args(args)

@@ -55,11 +55,10 @@ def get_args():
     args = parser.parse_args()
 
     if args.dataset == 'ocr':
-        args.data_train_path = 'SDCA/data/ocr_train.mat'
-        args.data_test_path = 'SDCA/data/ocr_test.mat'
-        #elif args.dataset == 'ocr_yy':
-        args.data_train_path = "SDCA/data/ocr_train_yy.mat"
-        args.data_test_path = "SDCA/data/ocr_test_yy.mat"   
+        #args.data_train_path = 'SDCA/data/ocr_train.mat'
+        #args.data_test_path = 'SDCA/data/ocr_test.mat'
+        args.data_train_path = "SDCA/data/ocr_train_struct_ckn.mat"
+        args.data_test_path = "SDCA/data/ocr_test_struct_ckn.mat"   
     elif args.dataset == 'conll':
         args.data_train_path = 'data/coNLL_train.mat'
         args.data_test_path = 'data/coNLL_test.mat'
@@ -72,7 +71,7 @@ def get_args():
     else:
         raise ValueError(f'the dataset {args.dataset} is not defined')
 
-    args.is_dense = ((args.dataset == 'ocr') or (args.dataset == 'ocr_yy'))
+    args.is_dense = (args.dataset == 'ocr')
 
     if args.line_search == 'golden':
         args.use_scipy_optimize = True

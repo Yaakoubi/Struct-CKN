@@ -1,5 +1,4 @@
 import math
-import matplotlib
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -8,11 +7,8 @@ from sklearn.cluster import MiniBatchKMeans
 from sklearn.preprocessing import RobustScaler
 from sklearn.utils import check_random_state
 from torch.autograd import Variable
-
 import utils_local
 from image_processing_utils import *
-
-matplotlib.use('Agg')
 
 
 class Cell:
@@ -172,7 +168,6 @@ class Cell:
         p_size = x_input.size()[2]
         self.training_loss = []
         for t in range(self.iter_max):
-            tic0 = time.time()
             overall_loss = 0
             for b in range(batch_nb):
                 def closure():
@@ -197,8 +192,6 @@ class Cell:
                     return loss
 
                 self.optimizer.step(closure)
-            tac0 = time.time()
-
     def init_W(self, X, patches_given=True, use_cuda=True, use_batch_mode_select=False, init_unsup=True):
         carroussel = 0
         if use_batch_mode_select:

@@ -196,10 +196,10 @@ def reconstruct(x, y, lengths, cuda=True):
     return np.array(words_x), np.array(words_y)
 
 
-def write_mat_file(x, y, lengths, train=True, write_file=True, filename=None):
+def write_mat_file(x, y, lengths, train=True, write_file=True):
     if write_file:
-        new_data_train_path = "SDCA/data/ocr_train_yy_" + filename + ".mat"
-        new_data_test_path = "SDCA/data/ocr_test_yy_" + filename + ".mat"
+        new_data_train_path = "SDCA/data/ocr_train_struct_ckn.mat"
+        new_data_test_path = "SDCA/data/ocr_test_struct_ckn.mat"
     x_for_sdca = []
     y_for_sdca = []
     y_local = y.copy()
