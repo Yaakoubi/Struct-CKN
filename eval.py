@@ -146,7 +146,7 @@ try:
 except:
     raise Exception("Files in ./pretrained/ not found.\n" +
                     "Please load the pretrained weights from the following link:\n" +
-                    "https://bit.ly/Struct-CKN")
+                    "https://bit.ly/Struct_CKN")
 if use_sdca4crf:
     scaled_data_for_test = CKN.propagate_sdca(
         X_test, letters_y_test, clf, scaler, None, X_test_words, y_test_words, lengths_test, use_scaler)
